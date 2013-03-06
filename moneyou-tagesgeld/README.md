@@ -13,3 +13,12 @@ Das Skript unterstützt das Laden folgender Informationen:
 
 - laufender Saldo
 - Umsätze
+
+Changelog
+==================
+
+* 0.0.2
+  * Bugfix: Zeiträume ohne Umsätze werden korrekt verarbeitet und werfen keinen Fehler mehr
+
+* 0.0.1
+  * Initiale Version zum Importieren von Umsätzen aus dem MoneYou Webinterface

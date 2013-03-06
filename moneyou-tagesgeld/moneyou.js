@@ -5,7 +5,7 @@
  *
  * Copyright (c) Robert Wachs / All rights reserved
  *
- * Version: 0.0.1 - 2013-02-17
+ * Version: 0.0.2 - 2013-03-06
 /*******************************************************************************/
 
 importPackage(Packages.de.willuhn.logging);
@@ -86,7 +86,13 @@ function rowawebDe_moneYouDe_Js_kontoSync(konto, monitor)
   Logger.info("Saldobestimmtung und CSV-Download erfolgreich. Importiere Umsaetze.");
   monitor.log("Saldobestimmtung und CSV-Download erfolgreich. Importiere Umsaetze.");
 
-  var data = rowawebDe_moneYouDe_Js_csv2Array(csv, ";");
+  var data = [];
+  if (csv.length) {
+    data = rowawebDe_moneYouDe_Js_csv2Array(csv, ";");
+  } else {
+    Logger.info("Keine Umsaetze vorhanden.");
+    monitor.log("Keine Umsaetze vorhanden.");
+  }
 
   // Datenbank-Verbindung holen
   var db = Application.getServiceFactory().lookup(HBCI,"database");
@@ -286,12 +292,27 @@ function rowawebDe_moneYouDe_Js_HttpGetData (k, webClient)
 
   p = form.getInputByName("Subm20").click();
 
+  // Auszuege vorhanden?
+  var text = p.asXml();
+  if (text.match(/keine Kontobewegungen vorhanden/)) {
+    return "";
+  }
+
+  var buttonNotFound = 'CSV-Download-Button konnte nicht gefunden werden.';
+
   var downloadButton = p.getFirstByXPath("//input[@class='bstan']");
+
+  if (!downloadButton) {
+    Logger.info(buttonNotFound);
+    throw(buttonNotFound);
+  }
+
   var linkMatch = downloadButton.asXml().match(/window\.open\(([^\)]+)\)/);
 
   if (!linkMatch) {
-    throw('CSV-Download-Button konnte nicht gefunden werden.');
+    throw(buttonNotFound);
   }
+
   linkMatch = linkMatch[1];
   linkMatch = 'https://secure.moneyou.de/exp/jsp/' + linkMatch.replace(/&apos;/g, '');
 
