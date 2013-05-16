@@ -103,20 +103,27 @@ function rowawebDe_moneYouDe_Js_kontoSync(konto, monitor)
   monitor.log("Saldo aktualisiert von Konto: " + konto.getKontonummer());
 
   var c = 0;
+  var eur = 0;
+  var row;
   for (var i = 0; i < data.length; ++i)
   {
-    if (data[i][0] == "Kontonummer"){
+    row = data[i];
+
+    if (row[0] == "Kontonummer"){
       // Ignorieren
-      data[i][0] = undefined;
+      row[0] = undefined;
     } else {
-      eur = data[i][3];
+      eur = row[3];
 
-      if (!eur) continue;
+      if (!eur) {
+        Logger.debug("Datensatz " + i + " enthaelt keinen Betrag: " + row.toString());
+        continue;
+      }
 
-      eur = parseFloat(data[i][3].replace(/\./g,"").replace(/\,/, "."));
+      eur = parseFloat(row[3].replace(/\./g,"").replace(/\,/, "."));
 
-      data[i][3] = eur;
-      data[i][0] = saldo;
+      row[3] = eur;
+      row[0] = saldo;
       saldo = saldo - eur; saldo = Math.round(saldo * 100) / 100;
 
       c++;
@@ -127,22 +134,24 @@ function rowawebDe_moneYouDe_Js_kontoSync(konto, monitor)
   // zuerst in der DB landen. Diesmal haben wir auch den Saldo nach Buchung
   for(var i=(data.length - 1); i>0; i-- )
   {
-    if (!data[i][0]) continue;
+    row = data[i];
+
+    if (!row[0] || row.length < 10) continue;
 
     // Fortschrittsanzeige auf 30% (Stand nach Kontoabruf) bis max. 99%
     monitor.setPercentComplete(parseInt((30 + ((69/c)*((data.length - 1) - i)))));
 
     var umsatz = db.createObject(Umsatz,null);
     umsatz.setKonto(konto);
-    var belegdatum = data[i][1].split(".");
-    var valutadatum = data[i][5].split(".");
-    var gegenKonto = data[i][6];
+    var belegdatum = row[1].split(".");
+    var valutadatum = row[5].split(".");
+    var gegenKonto = row[6];
 
     umsatz.setDatum(new Date(belegdatum[2], (belegdatum[1] - 1), belegdatum[0]));
     umsatz.setValuta(new Date(valutadatum[2], (valutadatum[1] - 1),valutadatum[0]));
-    umsatz.setBetrag(data[i][3]);
-    umsatz.setSaldo(data[i][0]);
-    umsatz.setPrimanota(data[i][10]);
+    umsatz.setBetrag(row[3]);
+    umsatz.setSaldo(row[0]);
+    umsatz.setPrimanota(row[10]);
 
     if (gegenKonto) {
       gegenKonto = gegenKonto.split("-");
@@ -151,12 +160,12 @@ function rowawebDe_moneYouDe_Js_kontoSync(konto, monitor)
         umsatz.setGegenkontoNummer(gegenKonto[1]);
         umsatz.setGegenkontoBLZ(gegenKonto[0]);
       } else {
-        umsatz.setKommentar(data[i][2]);
+        umsatz.setKommentar(row[2]);
       }
     }
-    umsatz.setGegenkontoName(data[i][7]);
+    umsatz.setGegenkontoName(row[7]);
 
-    var verwendungszweck = String("" + data[i][8] + " " + data[i][9]);
+    var verwendungszweck = String("" + row[8] + " " + row[9]);
     umsatz.setZweck(verwendungszweck.substr(0,35));
     if (verwendungszweck.length > 35) umsatz.setZweck2(String(verwendungszweck.substr(35,35)));
 
