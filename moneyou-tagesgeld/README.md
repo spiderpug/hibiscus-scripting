@@ -18,6 +18,9 @@ Das Skript unterstützt das Laden folgender Informationen:
 Changelog
 ==================
 
+* 0.0.3
+  * Bugfix: Empty CSV datasets no longer cause trouble
+
 * 0.0.2
   * Bugfix: Zeiträume ohne Umsätze werden korrekt verarbeitet und werfen keinen Fehler mehr
 

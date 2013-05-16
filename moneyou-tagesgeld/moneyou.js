@@ -5,7 +5,7 @@
  *
  * Copyright (c) Robert Wachs / All rights reserved
  *
- * Version: 0.0.2 - 2013-03-06
+ * Version: 0.0.3 - 2013-05-16
 /*******************************************************************************/
 
 importPackage(Packages.de.willuhn.logging);
