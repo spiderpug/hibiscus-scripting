@@ -3,7 +3,11 @@ MoneYou Tagesgeld
 
 Dieses Skript erlaubt den Umsatzabruf von MoneYou-Tagesgeldkonten mit der Bankleitzahl 50324040.
 
-Voraussetzung ist die Installation des [Scripting-Plugins](http://www.willuhn.de/wiki/doku.php?id=support:list:banken:scripting) inklusive HTMLUnit-Paket.
+Voraussetzungen:
+
+- [Scripting-Plugins](http://www.willuhn.de/wiki/doku.php?id=support:list:banken:scripting)
+- [HTMLUnit-Plugin](http://hibiscus-scripting.derrichter.de/documents)
+
 In Jameica/Hibiscus muss ein Offline-Konto mit folgenden Einstellungen angelegt werden:
 
 * Kundennummer:  Online-Banking Login (nicht die Kontonummer)
