@@ -192,6 +192,8 @@ function rowawebDe_moneYouDe_Js_getSaldo(konto, webClient) {
   url = 'https://secure.moneyou.de/exp/jsp/entrypoint.jsp?service=BIS0&state=000001'
   p = webClient.getPage(url);
 
+  rowawebDe_moneYouDe_Js_throwIfPageHasError(p);
+
   regex = new RegExp('<tr[\\s\\S]+' + konto.getKontonummer() +
     '[\\s\\S]+?<td[^>]+>[^<]+<\/td>\\s+<td[^>]+>[^<]+<\/td>\\s+<td[^>]+>[^<]+<\/td>\\s+<td[^>]+>[^<]+<\/td>\\s+<td[^>]+>\\s*([0-9.,]+)\\s+EUR',
     'i');
@@ -241,6 +243,17 @@ function rowawebDe_moneYouDe_Js_HttpLogin(loginKtonr, loginPasswd, webClient)
   return p;
 }
 
+function rowawebDe_moneYouDe_Js_throwIfPageHasError(page) {
+  var error = page.getFirstByXPath("//input[@type='hidden' and @name='error']");
+
+  if (error) {
+    var message = error.getAttributes().getNamedItem('value').getNodeValue() || '';
+    message = String(message).replace(/^\s+|\s+$/g, '');
+
+    if (message.length) throw(''+message);
+  }
+}
+
 function rowawebDe_moneYouDe_Js_HttpGetData (k, webClient)
 {
   var url = 'https://secure.moneyou.de/exp/jsp/entrypoint.jsp?service=BIC8&state=000001';
@@ -256,13 +269,13 @@ function rowawebDe_moneYouDe_Js_HttpGetData (k, webClient)
   // Kreditkarte auswaehlen...
 	var list = kk.getOptions();
 	for (i=0; i < list.size(); i++) {
-	        var d = list.get(i);
-	        if (String(d.asText()).match(regex))
-	        {
-	        	Logger.info("Kontoauswahl auf "+d);
-	        	d.setSelected( true );
-            ktSelected = true;
-	        }
+    var d = list.get(i);
+    if (String(d.asText()).match(regex))
+    {
+    	Logger.info("Kontoauswahl auf "+d);
+    	d.setSelected( true );
+      ktSelected = true;
+    }
 	}
 
 	if (!ktSelected) throw("Konto " + kknr + " nicht gefunden.");
@@ -306,6 +319,8 @@ function rowawebDe_moneYouDe_Js_HttpGetData (k, webClient)
   if (text.match(/keine Kontobewegungen vorhanden/)) {
     return "";
   }
+
+  rowawebDe_moneYouDe_Js_throwIfPageHasError(p);
 
   var buttonNotFound = 'CSV-Download-Button konnte nicht gefunden werden.';
 
