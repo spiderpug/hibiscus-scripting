@@ -344,8 +344,14 @@ function rowawebDe_moneYouDe_Js_HttpGetData (k, webClient)
     throw(buttonNotFound);
   }
 
+
   linkMatch = linkMatch[1];
-  linkMatch = 'https://secure.moneyou.de/exp/jsp/' + linkMatch.replace(/&apos;/g, '');
+  linkMatch = linkMatch.replace(/[^a-z0-9\/\.\?&;=-_]/gi, ''); // nicht kompatible Zeichen entfernen
+  linkMatch = linkMatch.replace(/&apos;/gi, '');
+
+  linkMatch = 'https://secure.moneyou.de/exp/jsp/' + linkMatch;
+
+  Logger.debug('Gehe zu: '+ linkMatch);
 
   // CSV-Export holen
   csv = webClient.getPage(linkMatch);
