@@ -20,7 +20,10 @@ Das Skript unterstützt das Laden folgender Informationen:
 - Umsätze
 
 Changelog
-==================
+---------
+
+* 0.0.4
+  * Bugfix: HTMLUnit 2.9+ parses CSV download link correctly
 
 * 0.0.3
   * Bugfix: Empty CSV datasets no longer cause trouble
