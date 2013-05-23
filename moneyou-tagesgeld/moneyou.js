@@ -89,7 +89,10 @@ function rowawebDe_moneYouDe_Js_kontoSync(konto, monitor)
   var data = [];
   if (csv.length) {
     data = rowawebDe_moneYouDe_Js_csv2Array(csv, ";");
-  } else {
+    monitor.log(data.length.toString() + " Zeilen identifiziert.");
+  }
+
+  if (data.length == 0) {
     Logger.info("Keine Umsaetze vorhanden.");
     monitor.log("Keine Umsaetze vorhanden.");
   }
@@ -117,6 +120,7 @@ function rowawebDe_moneYouDe_Js_kontoSync(konto, monitor)
 
       if (!eur) {
         Logger.debug("Datensatz " + i + " enthaelt keinen Betrag: " + row.toString());
+        row[0] = undefined; // ignorieren
         continue;
       }
 
@@ -136,7 +140,10 @@ function rowawebDe_moneYouDe_Js_kontoSync(konto, monitor)
   {
     row = data[i];
 
-    if (!row[0] || row.length < 10) continue;
+    if (row[0] == undefined || row.length < 10) {
+      Logger.debug('Datensatz ' + i.toString() + ' übersprungen. Spalten: ' + row.length);
+      continue;
+    }
 
     // Fortschrittsanzeige auf 30% (Stand nach Kontoabruf) bis max. 99%
     monitor.setPercentComplete(parseInt((30 + ((69/c)*((data.length - 1) - i)))));
@@ -337,8 +344,14 @@ function rowawebDe_moneYouDe_Js_HttpGetData (k, webClient)
     throw(buttonNotFound);
   }
 
+
   linkMatch = linkMatch[1];
-  linkMatch = 'https://secure.moneyou.de/exp/jsp/' + linkMatch.replace(/&apos;/g, '');
+  linkMatch = linkMatch.replace(/[^a-z0-9\/\.\?&;=-_]/gi, ''); // nicht kompatible Zeichen entfernen
+  linkMatch = linkMatch.replace(/&apos;/gi, '');
+
+  linkMatch = 'https://secure.moneyou.de/exp/jsp/' + linkMatch;
+
+  Logger.debug('Gehe zu: '+ linkMatch);
 
   // CSV-Export holen
   csv = webClient.getPage(linkMatch);
