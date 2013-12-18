@@ -1,0 +1,59 @@
+GIT
+  remote: git://github.com/customink/guard-uglify.git
+  revision: 6606154657d009944b9d7cc11c1b6dd1acb62fe3
+  specs:
+    guard-uglify (0.3.1)
+      guard (>= 0.2.2)
+      uglifier
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
+    coderay (1.1.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.3)
+    execjs (2.0.2)
+    ffi (1.9.3)
+    formatador (0.2.4)
+    guard (2.2.5)
+      formatador (>= 0.2.4)
+      listen (~> 2.1)
+      lumberjack (~> 1.0)
+      pry (>= 0.9.12)
+      thor (>= 0.18.1)
+    guard-coffeescript (1.3.4)
+      coffee-script (>= 2.2.0)
+      guard (>= 1.1.0)
+    listen (2.4.0)
+      celluloid (>= 0.15.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+    lumberjack (1.0.4)
+    method_source (0.8.2)
+    multi_json (1.8.2)
+    pry (0.9.12.4)
+      coderay (~> 1.0)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    rb-fsevent (0.9.3)
+    rb-inotify (0.9.3)
+      ffi (>= 0.5.0)
+    slop (3.4.7)
+    thor (0.18.1)
+    timers (1.1.0)
+    uglifier (2.1.2)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  guard
+  guard-coffeescript
+  guard-uglify (~> 0.3.0)!
+  uglifier

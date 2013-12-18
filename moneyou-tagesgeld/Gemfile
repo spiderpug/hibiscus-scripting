@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+
+gem 'uglifier'
+gem 'guard-uglify', '~> 0.3.0', :git => 'git://github.com/customink/guard-uglify.git'
+
+gem 'guard'
+gem 'guard-coffeescript'

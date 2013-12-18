@@ -1,0 +1,17 @@
+class Guard::JsConcat
+  def call(guard_class, event, *args)
+    files = Dir.glob('js/*.js')
+
+    `cat #{files.join(' ')} > moneyou.js`
+
+    puts "Concatenated JS files as 'moneyou.js'"
+  end
+end
+
+guard :coffeescript, input: 'cs', output: 'js', bare: %w(_boot.coffee), all_on_start: true do
+  callback(JsConcat.new, [:start_end, :run_all_end, :run_on_changes_end])
+end
+
+guard :uglify, input: '.', output: './', all_on_start: true do
+  watch (%r{moneyou.js})
+end
