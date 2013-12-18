@@ -44,7 +44,7 @@ class Sync
 
       unless knownTransactions?.contains(hiTransaction)
         @logger.info "Speichere Transaktion #{transaction}."
-        #hiTransaction.store()
+        hiTransaction.store()
       else
         @logger.info "Transaktion bereits vorhanden: #{transaction}."
 

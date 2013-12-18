@@ -402,6 +402,7 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
         hiTransaction = transaction.prepareHiTransaction(hiTransaction);
         if (!(knownTransactions != null ? knownTransactions.contains(hiTransaction) : void 0)) {
           this.logger.info("Speichere Transaktion " + transaction + ".");
+          hiTransaction.store();
         } else {
           this.logger.info("Transaktion bereits vorhanden: " + transaction + ".");
         }
