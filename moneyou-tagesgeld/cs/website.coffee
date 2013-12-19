@@ -8,7 +8,16 @@ class Website
 
   _setupClient: ->
     @client  = new WebClient()
-    @client.setCssEnabled false
+
+    options = @client.getOptions()
+    options.setUseInsecureSSL false
+    options.setRedirectEnabled true
+    options.setJavaScriptEnabled true
+    options.setThrowExceptionOnScriptError false
+    options.setThrowExceptionOnFailingStatusCode false
+    options.setCssEnabled false
+
+    @client
 
   hasText: (text) ->
     html = @page.asXml().toString()

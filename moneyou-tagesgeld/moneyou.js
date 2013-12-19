@@ -558,8 +558,16 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
     }
 
     Website.prototype._setupClient = function() {
+      var options;
       this.client = new WebClient();
-      return this.client.setCssEnabled(false);
+      options = this.client.getOptions();
+      options.setUseInsecureSSL(false);
+      options.setRedirectEnabled(true);
+      options.setJavaScriptEnabled(true);
+      options.setThrowExceptionOnScriptError(false);
+      options.setThrowExceptionOnFailingStatusCode(false);
+      options.setCssEnabled(false);
+      return this.client;
     };
 
     Website.prototype.hasText = function(text) {

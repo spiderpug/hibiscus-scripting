@@ -6,7 +6,7 @@ Dieses Skript erlaubt den Umsatzabruf von MoneYou-Tagesgeldkonten mit der Bankle
 Voraussetzungen:
 
 - [Scripting-Plugins](http://www.willuhn.de/wiki/doku.php?id=support:list:banken:scripting)
-- [HTMLUnit-Plugin](http://hibiscus-scripting.derrichter.de/documents)
+- [HTMLUnit-Plugin](http://hibiscus-scripting.derrichter.de/documents) v2.13+
 
 In Jameica/Hibiscus muss ein Offline-Konto mit folgenden Einstellungen angelegt werden:
 
