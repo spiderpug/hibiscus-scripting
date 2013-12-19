@@ -14,13 +14,21 @@ In Jameica/Hibiscus muss ein Offline-Konto mit folgenden Einstellungen angelegt 
 * Kontonummer:   Die Kontonummer des Tagesgeldkontos
 * Bankleitzahl:  50324040
 
-Das Skript unterstützt das Laden folgender Informationen:
+![Kontokonfiguration](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/account-config.gif "MoneYou Tagesgeld Kontokonfiguration")
+
+Das Skript unterstützt das Laden folgender Informationen über den Button "via Scripting synchronisieren":
 
 - laufender Saldo
 - Umsätze
 
+![Kontosynchronisation](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/account-sync.gif "Kontosynchronisation")
+
 Changelog
 ---------
+
+* 0.1.0
+  * Rewrite for new MoneYou website
+  * Requires HTMLUnit 2.13+
 
 * 0.0.4
   * Bugfix: HTMLUnit 2.9+ parses CSV download link correctly
