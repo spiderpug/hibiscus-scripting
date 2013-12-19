@@ -3,10 +3,17 @@ MoneYou Tagesgeld
 
 Dieses Skript erlaubt den Umsatzabruf von MoneYou-Tagesgeldkonten mit der Bankleitzahl 50324040.
 
-Voraussetzungen:
+### Voraussetzungen:
+
 
 - [Scripting-Plugins](http://www.willuhn.de/wiki/doku.php?id=support:list:banken:scripting)
 - [HTMLUnit-Plugin](http://hibiscus-scripting.derrichter.de/documents) v2.13+
+
+### Installation:
+
+Speichern Sie das Script ([`moneyou.min.js`](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/moneyou.min.js)) an einem beliebigen Ort und fügen Sie es in den Einstellungen unter "Scripting" hinzu:
+
+![Scriptkonfiguration](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/script-setup.gif "MoneYou Tagesgeld Scriptkonfiguration")
 
 In Jameica/Hibiscus muss ein Offline-Konto mit folgenden Einstellungen angelegt werden:
 
@@ -23,8 +30,23 @@ Das Skript unterstützt das Laden folgender Informationen über den Button "via 
 
 ![Kontosynchronisation](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/account-sync.gif "Kontosynchronisation")
 
-Changelog
----------
+### Probleme
+
+Sie können Probleme melden oder Ideen einbringen, indem Sie ein [Issue](https://github.com/spiderpug/hibiscus-scripting/issues) erstellen und eine möglichst genaue Fehler- oder Funktionsbeschreibung hinterlassen.
+
+### Entwickler
+
+Die Generierung des Scripts erfolgt in mehreren Stufen und erfordert eine Ruby-Umgebung inklusive [bundler](http://bundler.io/)-Gem.
+
+1. Quelltextanpassung in [CoffeeScript](http://coffeescript.org/)
+2. Generierung der Javascript-Dateien
+3. Minification zu `moneyou.min.js`
+
+Die erzeugten Javascript-Dateien dürfen nicht direkt verändert werden, da diese Dateien durch Änderungen an CoffeeScript-Dateien unterhalb von `cs` neu erstellt bzw. überschrieben werden.
+
+Während der Entwicklung ist das Ruby-Gem [Guard](https://github.com/guard/guard) für die Schritt eingerichtet und führt diese bei Änderungen am Quelltext automatisch aus: `bundle exec guard`.
+
+### Changelog
 
 * 0.1.0
   * Rewrite for new MoneYou website
