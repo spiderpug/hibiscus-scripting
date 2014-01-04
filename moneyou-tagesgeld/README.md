@@ -23,7 +23,7 @@ In Jameica/Hibiscus muss ein Offline-Konto mit folgenden Einstellungen angelegt 
 
 ![Kontokonfiguration](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/account-config.gif "MoneYou Tagesgeld Kontokonfiguration")
 
-Das Skript unterstützt das Laden folgender Informationen über den Button "via Scripting synchronisieren":
+Das Skript unterstützt das Laden folgender Informationen über das Übersichtsfenster oder den Button "via Scripting synchronisieren":
 
 - laufender Saldo
 - Umsätze
@@ -47,6 +47,9 @@ Die erzeugten Javascript-Dateien dürfen nicht direkt verändert werden, da dies
 Während der Entwicklung ist das Ruby-Gem [Guard](https://github.com/guard/guard) für die Schritt eingerichtet und führt diese bei Änderungen am Quelltext automatisch aus: `bundle exec guard`.
 
 ### Changelog
+
+* 0.1.1
+  * Enhancement: Allow synchronization using Jameica's account overview window
 
 * 0.1.0
   * Rewrite for new MoneYou website
