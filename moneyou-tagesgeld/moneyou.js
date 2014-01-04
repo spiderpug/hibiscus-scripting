@@ -3,9 +3,9 @@
 // *
 // * Copyright (c) Robert Wachs / All rights reserved
 // *
-// * Version: 0.1.0 - 2013-12-18
+// * Version: 0.1.1 - 2014-01-04
 // *******************************************************************************/;
-var rowaweb, rowawebTestKontoSync;
+var MONEYOU_BLZ, ROWAWEB_KONTO_SYNC, ROWAWEB_KONTO_SYNC_JOB_KONTOAUSZUG, rowaweb, rowawebMoneyouKontoSync, rowawebMoneyouOverviewSync, rowawebMoneyouOverviewSyncJobKontoauszug;
 
 importPackage(Packages.de.willuhn.logging);
 
@@ -21,12 +21,37 @@ importPackage(Packages.com.gargoylesoftware.htmlunit.html);
 
 importPackage(Packages.com.gargoylesoftware.htmlunit.util);
 
-events.add("hibiscus.konto.sync", "rowawebTestKontoSync");
+MONEYOU_BLZ = "50324040";
 
-rowawebTestKontoSync = function(account, monitor) {
+ROWAWEB_KONTO_SYNC = "rowawebMoneyouKontoSync";
+
+ROWAWEB_KONTO_SYNC_JOB_KONTOAUSZUG = "rowawebMoneyouOverviewSyncJobKontoauszug";
+
+events.add("hibiscus.konto.sync", ROWAWEB_KONTO_SYNC);
+
+events.add("hibiscus.sync.function", "rowawebMoneyouOverviewSync");
+
+rowawebMoneyouOverviewSync = function(account, type) {
+  if (!account.getBLZ().equals(MONEYOU_BLZ)) {
+    return null;
+  }
+  if (type.equals(SynchronizeJobKontoauszug)) {
+    return ROWAWEB_KONTO_SYNC_JOB_KONTOAUSZUG;
+  }
+  return null;
+};
+
+rowawebMoneyouOverviewSyncJobKontoauszug = function(job, session) {
+  var account, monitor;
+  account = job.getKonto();
+  monitor = session.getProgressMonitor();
+  return this[ROWAWEB_KONTO_SYNC](account, monitor);
+};
+
+rowawebMoneyouKontoSync = function(account, monitor) {
   var kontonr;
   kontonr = account.getBLZ().toString();
-  if (!kontonr.equals("50324040")) {
+  if (!kontonr.equals(MONEYOU_BLZ)) {
     return;
   }
   return rowaweb.entryPoint(account, monitor);
@@ -44,7 +69,11 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
     error = _error;
     logger.notice("Synchronisation fehlgeschlagen: " + error);
   } finally {
-    sync.finish();
+    try {
+      sync.finish();
+    } catch (_error) {
+      null;
+    }
   }
   return true;
 };
