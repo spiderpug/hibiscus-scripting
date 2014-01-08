@@ -55,6 +55,8 @@ rowaweb.entryPoint = (hiAccount, monitor) ->
     sync.synchronizeAccount()
   catch error
     logger.notice "Synchronisation fehlgeschlagen: #{error}"
+    logger.debug error
+    logger.debug sync.account?.site?.currentPage()?.asXml()
   finally
     try
       sync.finish()

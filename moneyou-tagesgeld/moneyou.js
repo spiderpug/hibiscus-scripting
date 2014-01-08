@@ -60,7 +60,7 @@ rowawebMoneyouKontoSync = function(account, monitor) {
 rowaweb = {};
 
 rowaweb.entryPoint = function(hiAccount, monitor) {
-  var error, logger, sync;
+  var error, logger, sync, _ref, _ref1, _ref2;
   logger = rowaweb.logger.init(monitor);
   sync = new rowaweb.sync(hiAccount);
   try {
@@ -68,6 +68,8 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
   } catch (_error) {
     error = _error;
     logger.notice("Synchronisation fehlgeschlagen: " + error);
+    logger.debug(error);
+    logger.debug((_ref = sync.account) != null ? (_ref1 = _ref.site) != null ? (_ref2 = _ref1.currentPage()) != null ? _ref2.asXml() : void 0 : void 0 : void 0);
   } finally {
     try {
       sync.finish();
@@ -212,10 +214,15 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
       return content;
     };
 
+    Account.prototype._dropdownOptionValue = function() {
+      return "50324040" + (this.hiAccount.getKontonummer());
+    };
+
     Account.prototype._extractSaldoFromSelect = function() {
-      var amount, matches, selectedAccountDescription;
-      selectedAccountDescription = this.site.currentPage().getFirstByXPath('//select[@name="accountNumber"]//option[@selected]').asText();
-      matches = selectedAccountDescription.match(/([0-9.,]+)\s*EUR$/);
+      var amount, matches, optionSelector, selectedAccountDescription, _ref;
+      optionSelector = "//select[@name=\"accountNumber\"]//option[@value=\"" + (this._dropdownOptionValue()) + "\"]";
+      selectedAccountDescription = (_ref = this.site.currentPage().getFirstByXPath(optionSelector)) != null ? _ref.asText() : void 0;
+      matches = selectedAccountDescription != null ? selectedAccountDescription.match(/([0-9.,]+)\s*EUR$/) : void 0;
       if (matches != null ? matches.length : void 0) {
         amount = matches[1];
         return parseFloat(amount.replace(/\./g, "").replace(/,/, "."));
@@ -240,7 +247,7 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
       }
       this.site.selectOption('accountNumber', {
         form: 'DownloadMovementForm',
-        value: "50324040" + (this.hiAccount.getKontonummer())
+        value: this._dropdownOptionValue()
       });
       return this.logger.progress(22);
     };
@@ -660,7 +667,7 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
       }
       if (!didSelect) {
         this.logger.debug(this.page.asXml());
-        throw "Option in Feld " + field + " nicht gefunden.";
+        throw "Option '" + options.value + "' in Feld '" + field + "'' nicht gefunden.";
       }
       return true;
     };

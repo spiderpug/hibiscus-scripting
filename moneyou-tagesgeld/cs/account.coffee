@@ -122,12 +122,16 @@ class Account
 
     content
 
-  _extractSaldoFromSelect: ->
-    selectedAccountDescription = @site.currentPage()
-      .getFirstByXPath('//select[@name="accountNumber"]//option[@selected]')
-      .asText()
+  _dropdownOptionValue: ->
+    "50324040#{@hiAccount.getKontonummer()}"
 
-    matches = selectedAccountDescription.match /([0-9.,]+)\s*EUR$/
+  _extractSaldoFromSelect: ->
+    optionSelector = "//select[@name=\"accountNumber\"]//option[@value=\"#{@_dropdownOptionValue()}\"]"
+
+    selectedAccountDescription = @site.currentPage()
+      .getFirstByXPath(optionSelector)?.asText()
+
+    matches = selectedAccountDescription?.match /([0-9.,]+)\s*EUR$/
 
     if matches?.length
       amount = matches[1]
@@ -152,7 +156,7 @@ class Account
 
     @site.selectOption 'accountNumber',
       form: 'DownloadMovementForm'
-      value: "50324040#{@hiAccount.getKontonummer()}"
+      value: @_dropdownOptionValue()
 
     @logger.progress 22
 

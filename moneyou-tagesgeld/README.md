@@ -48,6 +48,9 @@ Während der Entwicklung ist das Ruby-Gem [Guard](https://github.com/guard/guard
 
 ### Changelog
 
+* 0.1.2
+  * Bugfix: Fix selection of subaccounts (#8)
+
 * 0.1.1
   * Enhancement: Allow synchronization using Jameica's account overview window
 

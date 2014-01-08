@@ -73,7 +73,7 @@ class Website
 
     unless didSelect
       @logger.debug @page.asXml()
-      throw "Option in Feld #{field} nicht gefunden."
+      throw "Option '#{options.value}' in Feld '#{field}'' nicht gefunden."
 
     true
 
