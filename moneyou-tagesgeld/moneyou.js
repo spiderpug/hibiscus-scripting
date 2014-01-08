@@ -3,7 +3,7 @@
 // *
 // * Copyright (c) Robert Wachs / All rights reserved
 // *
-// * Version: 0.1.1 - 2014-01-04
+// * Version: 0.1.2 - 2014-01-09
 // *******************************************************************************/;
 var MONEYOU_BLZ, ROWAWEB_KONTO_SYNC, ROWAWEB_KONTO_SYNC_JOB_KONTOAUSZUG, rowaweb, rowawebMoneyouKontoSync, rowawebMoneyouOverviewSync, rowawebMoneyouOverviewSyncJobKontoauszug;
 
