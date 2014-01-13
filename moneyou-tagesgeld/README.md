@@ -30,6 +30,8 @@ Das Skript unterstützt das Laden folgender Informationen über das Übersichtsf
 
 ![Kontosynchronisation](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/account-sync.gif "Kontosynchronisation")
 
+![Kontosynchronisation](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/sync-success.gif "Synchronisation erfolgreich")
+
 ### Probleme
 
 Sie können Probleme melden oder Ideen einbringen, indem Sie ein [Issue](https://github.com/spiderpug/hibiscus-scripting/issues) erstellen und eine möglichst genaue Fehler- oder Funktionsbeschreibung hinterlassen.
