@@ -3,7 +3,7 @@
 // *
 // * Copyright (c) Robert Wachs / All rights reserved
 // *
-// * Version: 0.1.2 - 2014-01-09
+// * Version: 0.1.3
 // *******************************************************************************/;
 var MONEYOU_BLZ, ROWAWEB_KONTO_SYNC, ROWAWEB_KONTO_SYNC_JOB_KONTOAUSZUG, rowaweb, rowawebMoneyouKontoSync, rowawebMoneyouOverviewSync, rowawebMoneyouOverviewSyncJobKontoauszug;
 
@@ -186,6 +186,7 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
 
     Account.prototype._tryLogin = function(password) {
       var page;
+      this.logger.notice("Loginversuch ...");
       this.site.get('/thc/policyenforcer/pages/loginB2C.jsf');
       this.site.fillIn('j_username_pwd', {
         "with": this.hiAccount.getKundennummer(),
@@ -408,7 +409,8 @@ rowaweb.entryPoint = function(hiAccount, monitor) {
         return;
       }
       validTransactions = this.account.transactions();
-      if (validTransactions.length && this.account.balance) {
+      if (this.account.balance && (typeof this.account.balance).equals('number')) {
+        this.logger.debug("Setze Saldo.");
         this.hiAccount.setSaldo(this.account.balance);
         this.hiAccount.store();
       }

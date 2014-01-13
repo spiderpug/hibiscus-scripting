@@ -12,7 +12,9 @@ class Sync
 
     validTransactions = @account.transactions()
 
-    if validTransactions.length and @account.balance
+    if @account.balance and (typeof @account.balance).equals 'number'
+      @logger.debug "Setze Saldo."
+
       @hiAccount.setSaldo @account.balance
       @hiAccount.store()
 

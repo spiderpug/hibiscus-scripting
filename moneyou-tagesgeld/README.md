@@ -11,7 +11,7 @@ Dieses Skript erlaubt den Umsatzabruf von MoneYou-Tagesgeldkonten mit der Bankle
 
 ### Installation:
 
-Speichern Sie das Script ([`moneyou.min.js`](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/moneyou.min.js)) an einem beliebigen Ort und fügen Sie es in den Einstellungen unter "Scripting" hinzu:
+Speichern Sie das Script (`moneyou-x.x.x.min.js`) an einem beliebigen Ort und fügen Sie es in den Einstellungen unter "Scripting" hinzu:
 
 ![Scriptkonfiguration](https://raw.github.com/spiderpug/hibiscus-scripting/master/moneyou-tagesgeld/doc/script-setup.gif "MoneYou Tagesgeld Scriptkonfiguration")
 
@@ -47,6 +47,9 @@ Die erzeugten Javascript-Dateien dürfen nicht direkt verändert werden, da dies
 Während der Entwicklung ist das Ruby-Gem [Guard](https://github.com/guard/guard) für die Schritt eingerichtet und führt diese bei Änderungen am Quelltext automatisch aus: `bundle exec guard`.
 
 ### Changelog
+
+* 0.1.3
+  * Bugfix: Updating saldo does not take place if no transaction are found
 
 * 0.1.2
   * Bugfix: Fix selection of subaccounts (#8)

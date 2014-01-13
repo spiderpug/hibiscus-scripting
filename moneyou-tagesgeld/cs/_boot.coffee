@@ -3,7 +3,7 @@
 // *
 // * Copyright (c) Robert Wachs / All rights reserved
 // *
-// * Version: 0.1.2 - 2014-01-09
+// * Version: MONEYOU_VERSION
 // *******************************************************************************/`
 
 importPackage(Packages.de.willuhn.logging)

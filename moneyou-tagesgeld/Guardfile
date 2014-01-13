@@ -1,10 +1,17 @@
+require File.expand_path('../version.rb', __FILE__)
+
 class Guard::JsConcat
   def call(guard_class, event, *args)
     files = Dir.glob('js/*.js')
 
-    `cat #{files.join(' ')} > moneyou.js`
+    out = "moneyou-#{MONEYOU_VERSION}"
 
-    puts "Concatenated JS files as 'moneyou.js'"
+    `cat #{files.join(' ')} | sed 's/MONEYOU_VERSION/#{MONEYOU_VERSION}/g' > #{out}.js`
+
+    puts "Concatenated JS files as '#{out}'"
+
+    clean = Dir.glob('*.js').reject{|f| f =~ /#{out}/}
+    File.unlink *clean
   end
 end
 
@@ -13,5 +20,5 @@ guard :coffeescript, input: 'cs', output: 'js', bare: %w(_boot.coffee), all_on_s
 end
 
 guard :uglify, input: '.', output: './', all_on_start: true do
-  watch (%r{moneyou.js})
+  watch (%r{moneyou-#{MONEYOU_VERSION}.js})
 end

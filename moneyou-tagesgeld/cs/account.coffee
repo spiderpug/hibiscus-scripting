@@ -95,6 +95,8 @@ class Account
       undefined
 
   _tryLogin: (password) ->
+    @logger.notice "Loginversuch ..."
+
     @site.get('/thc/policyenforcer/pages/loginB2C.jsf')
 
     @site.fillIn 'j_username_pwd', with: @hiAccount.getKundennummer(), form: 'loginForm'
