@@ -1,6 +1,12 @@
 MoneYou Tagesgeld
 ==================
 
+# Dieses Projekt wird nicht länger aktualisiert.
+
+Bitte benutzt die aufgeführten Alternativen unter [https://www.willuhn.de/wiki](https://www.willuhn.de/wiki/doku.php?id=support:list:banken:scripting)
+
+-------------------------------------
+
 Dieses Skript erlaubt den Umsatzabruf von MoneYou-Tagesgeldkonten mit der Bankleitzahl 50324040.
 
 ### Voraussetzungen:
